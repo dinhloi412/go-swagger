@@ -1,0 +1,128 @@
+basePath: /v2
+definitions:
+  model.APIError:
+    properties:
+      code:
+        type: integer
+      message:
+        type: string
+      success:
+        type: string
+    type: object
+  model.Person:
+    properties:
+      createdAt:
+        type: integer
+      first_name:
+        type: string
+      id:
+        type: string
+      last_name:
+        type: string
+      updatedAt:
+        type: string
+    type: object
+  model.User:
+    properties:
+      createdAt:
+        type: integer
+      id:
+        type: string
+      person:
+        $ref: '#/definitions/model.Person'
+      photoUrls:
+        items:
+          type: string
+        type: array
+      updatedAt:
+        type: string
+    type: object
+host: petstore.swagger.io
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /api/v1/{id}:
+    get:
+      responses:
+        "200":
+          description: ok
+          schema:
+            $ref: '#/definitions/model.User'
+        "400":
+          description: We need ID!!
+          schema:
+            $ref: '#/definitions/model.APIError'
+        "404":
+          description: Can not find ID
+          schema:
+            $ref: '#/definitions/model.APIError'
+  /api/v1/users:
+    post:
+      parameters:
+      - description: Some ID
+        in: body
+        name: some
+        required: true
+        schema:
+          $ref: '#/definitions/model.User'
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: We need ID!!
+          schema:
+            $ref: '#/definitions/model.APIError'
+        "404":
+          description: Can not find ID
+          schema:
+            $ref: '#/definitions/model.APIError'
+  /testapi/get-struct-array-by-string/{some_id}:
+    get:
+      consumes:
+      - application/json
+      description: get struct array by ID
+      operationId: get-struct-array-by-string
+      parameters:
+      - description: Some ID
+        in: path
+        name: some_id
+        required: true
+        type: string
+      - description: Offset
+        in: query
+        name: offset
+        required: true
+        type: integer
+      - description: Offset
+        in: query
+        name: limit
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ok
+          schema:
+            type: string
+        "400":
+          description: We need ID!!
+          schema:
+            $ref: '#/definitions/model.APIError'
+        "404":
+          description: Can not find ID
+          schema:
+            $ref: '#/definitions/model.APIError'
+swagger: "2.0"
